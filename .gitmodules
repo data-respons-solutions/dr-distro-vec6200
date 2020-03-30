@@ -1,9 +1,28 @@
 [submodule "bitbake"]
 	path = bitbake
 	url = git://git.openembedded.org/bitbake
-	branch = 1.42
+	branch = 1.44
 [submodule "oe-core"]
 	path = oe-core
 	url = git://git.openembedded.org/openembedded-core
-	branch = warrior
-	warrior = warrior
+	branch = zeus
+[submodule "meta-openembedded"]
+	path = meta-openembedded
+	url = git://git.openembedded.org/meta-openembedded
+	branch = zeus
+[submodule "meta-freescale"]
+	path = meta-freescale
+	url = git://git.yoctoproject.org/meta-freescale
+	branch = zeus
+[submodule "meta-bsp-common"]
+	path = meta-bsp-common
+	url = git@github.com:data-respons-solutions/meta-bsp-common.git
+[submodule "meta-connectivity"]
+	path = meta-connectivity
+	url = git@github.com:data-respons-solutions/meta-connectivity.git
+[submodule "meta-bsp-vec6200"]
+	path = meta-bsp-vec6200
+	url = git@github.com:data-respons-solutions/meta-bsp-vec6200.git
+[submodule "meta-datarespons"]
+	path = meta-datarespons
+	url = git@github.com:data-respons-solutions/meta-datarespons.git
