@@ -1,8 +1,10 @@
-# Data Respons build system
+VEC6200 SDK
+===========
 
+## Maintainer
+Mikko Salomäki <ms@datarespons.se>
 
-## How To Use
-
+## Build
 External recipe sources are included in the project as git submodules.
 These modules need to be initialized on first use:
 
@@ -27,8 +29,44 @@ $ export DR_BUILD_NO=<yout build number if needed>
 $ export BB_ENV_EXTRAWHITE="DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT"
 $ source <top of project>/oe-core/oe-init-build-env build <top of project>/bitbake/
 ```
-And now you can build:
+
+### Factory
+Needed for flashing u-boot through SDP (serial download protocol).
+Generate factory image , factory tools and u-boot(factory and production) binaries:
 
 ```
-$ DISTRO=your-distro MACHINE=your-machine bitbake your-image
+$ bitbake factory-tools
+$ MACHINE=vec6200-factory bitbake factory-image
 ```
+
+### Datarespons reference distro
+`$ bitbake datarespons-image`
+
+### Datarespons reference distro SDK
+`$ bitbake datarespons-image -c populate_sdk`
+
+
+## Usage
+### Flash u-boot
+* Build tools and binaries: [Factory](#Factory)
+* Install factory tools:
+
+`$ <top of project>/build/tmp-glibc/deploy/sdk/vec6200-factory-tools-*.sh`
+
+* Source tools environment:
+
+`$ . <tools install dir>/environment-setup-*`
+
+* Set system into [Rescue mode](#Rescue%20mode).
+* Extract and run factory image (Connect to system console for progress)
+
+```
+$ cd <top of project>/build/tmp-glibc/deploy/images/vec6200-factory
+$ tar -xf factory-image-vec6200-factory.tar.bz
+$ cd boot
+$ sudo imx_usb -c .
+```
+
+### Rescue mode
+Forcing system into rescue mode allows re-flashing u-boot externally with factory image.
+Connect debug board and set jumper X.
