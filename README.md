@@ -19,6 +19,15 @@ the provide 'env' script:
 `$ . ./env`
 
 This will generate artifacts under the build sub-folder.
+Read freescale EULA at:
+
+`<top of project>/meta-freescale/EULA`
+
+If you accept, set ACCEPT\_FSL\_EULA from "0" to "1" in your newly generated local.conf:
+
+`<top of project>/build/conf/local.conf`
+
+
 If you need more flexibility in where to build do:
 
 ```
