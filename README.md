@@ -71,8 +71,6 @@ $ MACHINE=vec6200-factory bitbake factory-image
 
 ```
 $ cd <top of project>/build/tmp-glibc/deploy/images/vec6200-factory
-$ tar -xf factory-image-vec6200-factory.tar.bz
-$ cd boot
 $ sudo imx_usb -c .
 ```
 
