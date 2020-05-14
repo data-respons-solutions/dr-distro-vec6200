@@ -26,3 +26,9 @@
 [submodule "meta-datarespons"]
 	path = meta-datarespons
 	url = git@github.com:data-respons-solutions/meta-datarespons.git
+[submodule "meta-efi"]
+	path = meta-efi
+	url = git@github.com:data-respons-solutions/meta-efi.git
+[submodule "meta-test"]
+	path = meta-test
+	url = ssh://git@github.com/data-respons-solutions/meta-test.git

@@ -16,4 +16,5 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-bsp-vec6200 \
   ##OEROOT##/../meta-bsp-common \
   ##OEROOT##/../meta-vec6200 \
+  ##OEROOT##/../meta-test \
 "
