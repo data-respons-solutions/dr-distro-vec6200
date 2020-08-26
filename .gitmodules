@@ -16,19 +16,19 @@
 	branch = dunfell
 [submodule "meta-bsp-common"]
 	path = meta-bsp-common
-	url = git@github.com:data-respons-solutions/meta-bsp-common.git
+	url = ssh://git@github.com/data-respons-solutions/meta-bsp-common.git
 [submodule "meta-connectivity"]
 	path = meta-connectivity
-	url = git@github.com:data-respons-solutions/meta-connectivity.git
+	url = ssh://git@github.com/data-respons-solutions/meta-connectivity.git
 [submodule "meta-bsp-vec6200"]
 	path = meta-bsp-vec6200
-	url = git@github.com:data-respons-solutions/meta-bsp-vec6200.git
+	url = ssh://git@github.com/data-respons-solutions/meta-bsp-vec6200.git
 [submodule "meta-datarespons"]
 	path = meta-datarespons
-	url = git@github.com:data-respons-solutions/meta-datarespons.git
-[submodule "meta-efi"]
-	path = meta-efi
-	url = git@github.com:data-respons-solutions/meta-efi.git
+	url = ssh://git@github.com/data-respons-solutions/meta-datarespons.git
 [submodule "meta-test"]
 	path = meta-test
 	url = ssh://git@github.com/data-respons-solutions/meta-test.git
+[submodule "build/build-tools"]
+	path = build/build-tools
+	url = ssh://git@github.com/data-respons-solutions/build-tools.git
