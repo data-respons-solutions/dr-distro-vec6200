@@ -1,4 +1,6 @@
 pipeline {
+	agent any
+	
 	parameters {
 		string name: 'SSTATE', defaultValue: '${OE_SSTATE_DIR}', description: 'SSTATE directory'
 		string name: 'DOWNLOADS', defaultValue: '${OE_DL_DIR}', description: 'Downloads directory'
@@ -13,36 +15,41 @@ pipeline {
 		BUILD_USER = "${sh (returnStdout: true, script: 'id -un').trim()}"
 		BUILD_UID = "${sh (returnStdout: true, script: 'id -u').trim()}"
 		BUILD_GID = "${sh (returnStdout: true, script: 'id -g').trim()}"
+		BUILD_HOME = "${sh (returnStdout: true, script: 'getent passwd $(id -un) | cut -d: -f6').trim()}"
 	}
 	
-	agent {
-		dockerfile {
-			filename 'oe-build.docker'
-			dir 'build/build-tools'
-			args "-v ${SSTATE}:${SSTATE} -v ${DOWNLOADS}:${DOWNLOADS}"
-			additionalBuildArgs "--build-arg USERNAME=\"${BUILD_USER}\" --build-arg UID=\"${BUILD_UID}\" --build-arg GID=\"${BUILD_GID}\""
-		}
-	}
-
 	stages {
+	stage('Container') {
+		agent {
+			dockerfile {
+				filename 'oe-build.docker'
+				dir 'build/build-tools'
+				args "-v ${SSTATE}:${SSTATE} -v ${DOWNLOADS}:${DOWNLOADS} -v ${BUILD_HOME}/.ssh:/home/${BUILD_USER}/.ssh"
+				additionalBuildArgs "--build-arg USERNAME=${BUILD_USER} --build-arg UID=${BUILD_UID} --build-arg GID=${BUILD_GID}"
+			}
+		}
 	
-	stage('Build') {
-		steps {
-			sh """
-				rm -rf workdir
-				TEMPLATECONF="../build/conf" source ./oe-core/oe-init-build-env workdir
-				sed -i 's|.*DL_DIR ?=.*|DL_DIR ?= "${DOWNLOADS}"|' conf/local.conf
-				sed -i 's|.*SSTATE_DIR ?=.*|SSTATE_DIR ?= "${SSTATE}"|' conf/local.conf
-				sed -i 's|.*ACCEPT_FSL_EULA.*|ACCEPT_FSL_EULA = "1"|' conf/local.conf
-				export DR_CM_COMMIT="${GTAG}"
-				export DR_BUILD_NO="${BUILD_NUMBER}"
-				export DR_BUILD_PLAN="${JOB_NAME}"
-				export BB_ENV_EXTRAWHITE="DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT"
-				bitbake datarespons-image
-				MACHINE=${FACTORY_MACHINE} bitbake factory-image
-			"""
+		stages {
+		stage('Build') {
+			steps {
+				sshagent (credentials: ['github-data-respons-solutions', 'sftp-data-respons-solutions']) {
+					sh """
+						rm -rf workdir
+						TEMPLATECONF="../build/conf" source ./oe-core/oe-init-build-env workdir
+						sed -i 's|.*DL_DIR ?=.*|DL_DIR ?= "${DOWNLOADS}"|' conf/local.conf
+						sed -i 's|.*SSTATE_DIR ?=.*|SSTATE_DIR ?= "${SSTATE}"|' conf/local.conf
+						sed -i 's|.*ACCEPT_FSL_EULA.*|ACCEPT_FSL_EULA = "1"|' conf/local.conf
+						export DR_CM_COMMIT="${GTAG}"
+						export DR_BUILD_NO="${BUILD_NUMBER}"
+						export DR_BUILD_PLAN="${JOB_NAME}"
+						export BB_ENV_EXTRAWHITE="DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT"
+						bitbake datarespons-image
+						MACHINE=${FACTORY_MACHINE} bitbake factory-image
+					"""
+				}
+			}
+		}
 		}
 	}
-	
 	}
 }
