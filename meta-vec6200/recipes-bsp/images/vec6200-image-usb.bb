@@ -1,7 +1,7 @@
-DESCRIPTION = "Container image with artifacts required for booting system with rev A"
+DESCRIPTION = "Container image with artifacts required for booting system from USB"
 LICENSE = "MIT"
 
-INITRD_IMAGE = "datarespons-image-initramfs"
+INITRD_IMAGE = "vec6200-image-initramfs"
 
 FACTORY_IMAGE_INSTALL ?= ""
 IMAGE_INSTALL += "\
