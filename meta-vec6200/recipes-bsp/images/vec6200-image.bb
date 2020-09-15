@@ -8,4 +8,5 @@ IMAGE_INSTALL_append += " \
 	loopback-test \
 	image-install \
 	swap-root \
+	iointerface \
 "
