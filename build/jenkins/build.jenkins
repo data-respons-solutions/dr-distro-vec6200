@@ -44,6 +44,10 @@ pipeline {
 				reuseNode true
 			}
 		}
+		
+		environment {
+			GTAG = "${sh (returnStdout: true, script: 'git describe --always --tags --long --dirty').trim()}"
+		}
 	
 		stages {
 		stage('Build') {
@@ -55,7 +59,7 @@ pipeline {
 						sed -i 's|.*DL_DIR ?=.*|DL_DIR ?= "${DOWNLOADS}"|' conf/local.conf
 						sed -i 's|.*SSTATE_DIR ?=.*|SSTATE_DIR ?= "${SSTATE}"|' conf/local.conf
 						sed -i 's|.*ACCEPT_FSL_EULA.*|ACCEPT_FSL_EULA = "1"|' conf/local.conf
-						export DR_CM_COMMIT="$(git describe --always --tags --long --dirty)"
+						export DR_CM_COMMIT="${GTAG}"
 						export DR_BUILD_NO="${BUILD_NUMBER}"
 						export DR_BUILD_PLAN="${JOB_NAME}"
 						export BB_ENV_EXTRAWHITE="DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT MACHINE"
