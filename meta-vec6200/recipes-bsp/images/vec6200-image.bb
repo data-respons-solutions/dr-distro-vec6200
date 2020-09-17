@@ -9,4 +9,5 @@ IMAGE_INSTALL_append += " \
 	image-install \
 	swap-root \
 	iointerface \
+	canutils \
 "
