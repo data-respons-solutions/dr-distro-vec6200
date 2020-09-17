@@ -1,2 +1,8 @@
 build/conf/local.conf
 build/conf/bblayers.conf
+build/tmp-glibc
+build/workspace
+build/buildhistory
+build/bitbake-cookerdaemon.log
+build/cache
+build/tmp
