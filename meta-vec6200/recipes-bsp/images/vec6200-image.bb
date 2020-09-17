@@ -10,4 +10,5 @@ IMAGE_INSTALL_append += " \
 	swap-root \
 	iointerface \
 	canutils \
+	alsa-utils-scripts \
 "
