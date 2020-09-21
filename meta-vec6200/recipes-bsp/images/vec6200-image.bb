@@ -11,4 +11,5 @@ IMAGE_INSTALL_append += " \
 	iointerface \
 	canutils \
 	alsa-utils-scripts \
+	firmware-i210 \
 "
