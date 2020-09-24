@@ -12,6 +12,7 @@ IMAGE_INSTALL_append += " \
 	canutils \
 	alsa-utils-scripts \
 	firmware-i210 \
+	vec6200-test \
 "
 
 ROOTFS_POSTPROCESS_COMMAND_append = " add_mountpoints;"
