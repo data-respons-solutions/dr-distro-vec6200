@@ -1,7 +1,7 @@
-DESCRIPTION = "Container image with artifacts required for booting system from USB"
+DESCRIPTION = "Container image with artifacts required for booting service image from USB"
 LICENSE = "MIT"
 
-INITRD_IMAGE = "vec6200-image-initramfs"
+INITRD_IMAGE = "vec6200-service-image-initramfs"
 
 FACTORY_IMAGE_INSTALL ?= ""
 IMAGE_INSTALL += "\

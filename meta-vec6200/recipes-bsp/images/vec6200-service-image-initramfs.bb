@@ -1,6 +1,6 @@
-DESCRIPTION = "vec6200 reference image initramfs"
+DESCRIPTION = "vec6200 service image initramfs"
 
-require vec6200-image.bb
+require vec6200-service-image.bb
 
 IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
 
