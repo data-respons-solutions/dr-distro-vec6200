@@ -49,13 +49,98 @@ $ MACHINE=vec6200-factory bitbake factory-image
 ```
 
 ### Datarespons reference distro
-`$ bitbake datarespons-image`
+`$ bitbake vec6200-image`
 
 ### Datarespons reference distro SDK
-`$ bitbake datarespons-image -c populate_sdk`
+`$ bitbake vec6200-image -c populate_sdk`
 
 
 ## Usage
+### Applications
+**swap-root**
+
+Update rootfs
+ 
+**image-install**
+
+Fresh install from USB
+
+**dioctl**
+
+Example application for accesing digital inputs and outputs
+
+**antl**
+
+Example application for accessing analog inputs
+
+**status-led**
+
+Example application for setting status led
+
+### Interfaces
+**serial**
+
+Linux char devices:
+
+/dev/ttymxc0: console
+
+/dev/ttymxc1: COM1 (+rtscts)
+
+/dev/ttymxc2: gpsd reserved
+
+/dev/ttymxc3: COM2 (+rtscts)
+
+/dev/ttymxc4: bluetooth (optional m.2)
+
+/dev/ttySMC: smc reserved
+
+/dev/ttyVEC0: RS485_A
+* Termination: /sys/class/gpio/gpio489/value
+* J1708: /sys/class/gpio/gpio488/value
+
+/dev/ttyVEC1: RS485_B
+* Termination: /sys/class/gpio/gpio485/value
+* J1708: /sys/class/gpio/gpio484/value
+
+**can**
+
+Transceiver default mode is listen only. Set transceiver gpio to 1 to enable
+
+Linux socket devices:
+
+can0:
+* Termination: /sys/class/gpio/gpio95/value
+* Transceiver: /sys/class/gpio/gpio508/value
+
+can1:
+* Termination: /sys/class/gpio/gpio9/value
+* Transceiver: /sys/class/gpio/gpio509/value
+
+**gps**
+
+gps connected to gpsd.
+
+**tpm2.0**
+
+Linux char device.
+
+**accelerometer**
+
+iio_device: lsm6dsm_accel
+
+Access through libiio
+
+**gyro**
+
+iio device: lsm6dsm_gyro
+
+Access through libiio
+
+**audio**
+
+ALSA sound card: vec6200_audio1
+
+
 ### Flash u-boot
 * Build tools and binaries: [Factory](#Factory)
 * Install factory tools:
@@ -76,4 +161,4 @@ $ sudo imx_usb -c .
 
 ### Rescue mode
 Forcing system into rescue mode allows re-flashing u-boot externally with factory image.
-Connect debug board and set jumper X.
+Connect debug board and set jumper JP6 to 1-2.
