@@ -12,6 +12,7 @@ pipeline {
 		MACHINE = "vec6200"
 		FACTORY_MACHINE = "${MACHINE}-factory"
 		VEC6200_IMAGE_ARTIFACTS = "workdir/tmp-glibc/deploy/images/${MACHINE}/vec6200-image-${MACHINE}-*rootfs*"
+		VEC6200_SERVICE_IMAGE_ARTIFACTS = "workdir/tmp-glibc/deploy/images/${MACHINE}/vec6200-service-image-${MACHINE}-*rootfs*"
 		FACTORY_IMAGE_ARTIFACTS = "workdir/tmp-glibc/deploy/images/${FACTORY_MACHINE}/factory-image-${FACTORY_MACHINE}-*rootfs*"
 		BUILD_USER = "${sh (returnStdout: true, script: 'id -un').trim()}"
 		BUILD_UID = "${sh (returnStdout: true, script: 'id -u').trim()}"
@@ -64,6 +65,7 @@ pipeline {
 						export DR_BUILD_PLAN="${JOB_NAME}"
 						export BB_ENV_EXTRAWHITE="DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT MACHINE"
 						bitbake vec6200-image
+						bitbake vec6200-service-image
 						export MACHINE="${FACTORY_MACHINE}"
 						bitbake factory-image
 					"""
@@ -80,8 +82,8 @@ pipeline {
 				//
 				sshagent (credentials: ['sftp-data-respons-solutions']) {
 					sh """
-						echo -e "put ${VEC6200_IMAGE_ARTIFACTS} ${SFTP_PATH}\nput ${FACTORY_IMAGE_ARTIFACTS} ${SFTP_PATH}" | \
-						sftp -b - ${SFTP_URL}						
+						echo -e "put ${VEC6200_IMAGE_ARTIFACTS} ${SFTP_PATH}\nput ${FACTORY_IMAGE_ARTIFACTS} ${SFTP_PATH}\nput ${VEC6200_SERVICE_IMAGE_ARTIFACTS} ${SFTP_PATH}" | \
+						sftp -b - ${SFTP_URL}			
 					"""
 				}
 			}
