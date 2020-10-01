@@ -56,6 +56,14 @@ $ MACHINE=vec6200-factory bitbake factory-image
 
 
 ## Usage
+
+### Console
+Serial console through debug card, baud 115200.
+
+ssh by certificate. Reference distro certificate in meta-datarespons/recipes-security/ssh-keys/droot
+
+`$ ssh -i droot root@ip`
+
 ### Applications
 **swap-root**
 
