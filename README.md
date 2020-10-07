@@ -77,7 +77,7 @@ Fresh install from USB
 
 Example application for accesing digital inputs and outputs
 
-**antl**
+**anctl**
 
 Example application for accessing analog inputs
 
