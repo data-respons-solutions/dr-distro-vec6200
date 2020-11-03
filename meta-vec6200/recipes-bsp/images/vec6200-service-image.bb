@@ -7,4 +7,5 @@ IMAGE_INSTALL_append += " \
 	loopback-test \
 	firmware-i210 \
 	vec6200-test \
+	iperf3 \
 "
